@@ -1,3 +1,7 @@
+using System.Collections;
+using System.Linq;
+using System.Collections.Immutable;
+using System.Text;
 using System.Runtime.Serialization.Json;
 using System;
 using System.Text.Json.Serialization;
@@ -8,11 +12,11 @@ namespace NyaapiDotnet.Pantsu.Models
     {
 
         [JsonPropertyName("c")]
-        public string[] Categories  { get; set; }
+        public string[] Categories { get; set; }
         [JsonPropertyName("q")]
         public string Query { get; set; }
-        public int Page { get; set; }
-        public string Limit { get; set; }
+        public int? Page { get; set; }
+        public long? Limit { get; set; }
         [JsonPropertyName("userID")]
         public string UserID { get; set; }
         [JsonPropertyName("fromID")]
@@ -30,5 +34,27 @@ namespace NyaapiDotnet.Pantsu.Models
         public string Sort { get; set; }
         public string Order { get; set; }
         public string[] Languages { get; set; }
+
+        public string buildQueryParams()
+        {
+            ArrayList queryParams = new ArrayList();
+            if (Categories != null && Categories.Length != 0)
+            {
+                var cat = String.Concat("c=", String.Join(",", Categories));
+                queryParams.Add(cat);
+            }
+            if (Query != null && Query.Length != 0)
+            {
+                queryParams.Add($"q={Query}");
+            }
+            if (Limit != null && Limit != 0) {
+                queryParams.Add($"limit={Limit}");
+            } else 
+            {
+                queryParams.Add("limit=99999");
+            }
+
+            return String.Join("&", queryParams);
+        }
     }
 }
