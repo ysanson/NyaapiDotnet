@@ -13,13 +13,16 @@ namespace NyaapiDotnet.Pantsu
         public async IAsyncEnumerable<Torrent> SearchTorrents(SearchRequestParams queryParams)
         {
             using var client = new HttpClient();
-            client.BaseAddress = new Uri(PantsuConstants.url);
-            string url = queryParams != null ? $"/search?{queryParams.buildQueryParams()}" : $"/search";
-            
+            string url = queryParams != null ? $"{PantsuConstants.url}/search?{queryParams.buildQueryParams()}" : $"{PantsuConstants.url}/search";
+
             HttpResponseMessage response = await client.GetAsync(url);
             response.EnsureSuccessStatusCode();
-            var pantsuResponse = await JsonSerializer.DeserializeAsync<PantsuResponse>(await response.Content.ReadAsStreamAsync());
-            foreach(var torrent in pantsuResponse.torrents)
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            var pantsuResponse = await JsonSerializer.DeserializeAsync<PantsuResponse>(await response.Content.ReadAsStreamAsync(), options);
+            foreach (var torrent in pantsuResponse.Torrents)
             {
                 yield return new Torrent(torrent);
             }

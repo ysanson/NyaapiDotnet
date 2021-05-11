@@ -10,8 +10,8 @@ namespace NyaapiDotnet.Pantsu.Models
         public DateTime Date { get; set; }
         public long Filesize { get; set; }
         public string Description { get; set; }
-        public int SubCategory { get; set; }
-        public int Category { get; set; }
+        public string SubCategory { get; set; }
+        public string Category { get; set; }
         public string Magnet { get; set; }
         public string Torrent { get; set; }
         public int Leechers { get; set; }

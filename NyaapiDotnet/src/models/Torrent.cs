@@ -24,8 +24,8 @@ namespace NyaapiDotnet.Models
             Name = pantsuTorrent.Name;
             Hash = pantsuTorrent.Hash;
             Date = pantsuTorrent.Date;
-            Category = pantsuTorrent.Category.ToString();
-            SubCategory = pantsuTorrent.SubCategory.ToString();
+            Category = pantsuTorrent.Category;
+            SubCategory = pantsuTorrent.SubCategory;
             Magnet = pantsuTorrent.Magnet;
             TorrentAddress = pantsuTorrent.Torrent;
             Seeders = pantsuTorrent.Seeders;

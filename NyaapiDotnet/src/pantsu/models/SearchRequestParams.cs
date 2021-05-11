@@ -12,7 +12,7 @@ namespace NyaapiDotnet.Pantsu.Models
     {
 
         [JsonPropertyName("c")]
-        public string[] Categories { get; set; }
+        public ArrayList Categories { get; set; }
         [JsonPropertyName("q")]
         public string Query { get; set; }
         public int? Page { get; set; }
@@ -38,12 +38,12 @@ namespace NyaapiDotnet.Pantsu.Models
         public string buildQueryParams()
         {
             ArrayList queryParams = new ArrayList();
-            if (Categories != null && Categories.Length != 0)
+            if (Categories != null && Categories.Count != 0)
             {
-                var cat = String.Concat("c=", String.Join(",", Categories));
+                var cat = String.Concat("c=", String.Join(",", Categories.ToArray()));
                 queryParams.Add(cat);
             }
-            if (Query != null && Query.Length != 0)
+            if (!string.IsNullOrEmpty(Query))
             {
                 queryParams.Add($"q={Query}");
             }
