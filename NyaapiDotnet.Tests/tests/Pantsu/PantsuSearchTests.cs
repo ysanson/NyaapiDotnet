@@ -1,7 +1,7 @@
 using System.Collections;
 using Xunit;
 using System.Threading.Tasks;
-using NyaapiDotnet;
+using System.Linq;
 using NyaapiDotnet.Models;
 
 namespace NyaapiDotnet.UnitTests.Pantsu
@@ -34,6 +34,22 @@ namespace NyaapiDotnet.UnitTests.Pantsu
             }
             Assert.NotEmpty(torrents);
             Assert.Equal(limit, torrents.Count);
+        }
+
+        [Fact]
+        public async Task SearchForErai_ReturnEraiSubs()
+        {
+            var nyaapiService = new NyaapiService();
+            ArrayList torrents = new ArrayList();
+            await foreach (Torrent t in nyaapiService.searchTorrents(Feeds.Pantsu, Fansubs.EraiRaws, limit: 10))
+            {
+                torrents.Add(t);
+            }
+            Assert.NotEmpty(torrents);
+            foreach (Torrent torrent in torrents)
+            {
+                Assert.Contains("[Erai-raws]", torrent.Name);
+            }
         }
     }
 }

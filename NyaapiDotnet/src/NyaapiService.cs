@@ -50,7 +50,7 @@ namespace NyaapiDotnet
         {
             string fansub = fansubs switch
             {
-                Fansubs.EraiRaws => "[Erai-Raws] - ",
+                Fansubs.EraiRaws => "[Erai-raws] - ",
                 Fansubs.Puya => "[PuyaSubs!] - ",
                 Fansubs.Fuyu => "[Fuyu] - ",
                 Fansubs.Durandal => "[DurandalSubs] - ",
