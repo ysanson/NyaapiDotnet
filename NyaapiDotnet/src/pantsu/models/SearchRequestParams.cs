@@ -54,7 +54,7 @@ namespace NyaapiDotnet.Pantsu.Models
                 queryParams.Add("limit=99999");
             }
 
-            return String.Join("&", queryParams);
+            return string.Join("&", queryParams.ToArray());
         }
     }
 }
