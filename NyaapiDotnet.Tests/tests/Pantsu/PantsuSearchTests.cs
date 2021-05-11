@@ -40,15 +40,19 @@ namespace NyaapiDotnet.UnitTests.Pantsu
         public async Task SearchForErai_ReturnEraiSubs()
         {
             var nyaapiService = new NyaapiService();
-            ArrayList torrents = new ArrayList();
             await foreach (Torrent t in nyaapiService.searchTorrents(Feeds.Pantsu, Fansubs.EraiRaws, limit: 10))
             {
-                torrents.Add(t);
+                Assert.Contains("[Erai-raws]", t.Name);
             }
-            Assert.NotEmpty(torrents);
-            foreach (Torrent torrent in torrents)
+        }
+
+        [Fact]
+        public async Task SearchForQuality_ReturnsOnlyQuality()
+        {
+            var nyaapiService = new NyaapiService();
+            await foreach (Torrent t in nyaapiService.searchTorrents(Feeds.Pantsu, quality: Quality.FHD, limit: 10))
             {
-                Assert.Contains("[Erai-raws]", torrent.Name);
+                Assert.Contains("[1080p]", t.Name);
             }
         }
     }
