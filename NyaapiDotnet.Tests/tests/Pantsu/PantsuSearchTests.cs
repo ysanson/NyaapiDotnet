@@ -3,6 +3,7 @@ using Xunit;
 using System.Threading.Tasks;
 using System.Linq;
 using NyaapiDotnet.Models;
+using NyaapiDotnet.Service;
 
 namespace NyaapiDotnet.UnitTests.Pantsu
 {
@@ -12,8 +13,8 @@ namespace NyaapiDotnet.UnitTests.Pantsu
         public async Task SearchRandom_ReturnResults()
         {
             var nyaapiService = new NyaapiService();
-            ArrayList torrents = new ArrayList();
-            await foreach (Torrent t in nyaapiService.searchTorrents(Feeds.Pantsu))
+            ArrayList torrents = new();
+            await foreach (Torrent t in nyaapiService.SearchTorrents(Feeds.Pantsu))
             {
                 torrents.Add(t);
             }
@@ -27,8 +28,8 @@ namespace NyaapiDotnet.UnitTests.Pantsu
         public async Task SearchLimit_ReturnsLimitedItems(int limit)
         {
             var nyaapiService = new NyaapiService();
-            ArrayList torrents = new ArrayList();
-            await foreach (Torrent t in nyaapiService.searchTorrents(Feeds.Pantsu, limit: limit))
+            ArrayList torrents = new();
+            await foreach (Torrent t in nyaapiService.SearchTorrents(Feeds.Pantsu, limit: limit))
             {
                 torrents.Add(t);
             }
@@ -40,7 +41,7 @@ namespace NyaapiDotnet.UnitTests.Pantsu
         public async Task SearchForErai_ReturnEraiSubs()
         {
             var nyaapiService = new NyaapiService();
-            await foreach (Torrent t in nyaapiService.searchTorrents(Feeds.Pantsu, Fansubs.EraiRaws, limit: 10))
+            await foreach (Torrent t in nyaapiService.SearchTorrents(Feeds.Pantsu, Fansubs.EraiRaws, limit: 10))
             {
                 Assert.Contains("[Erai-raws]", t.Name);
             }
@@ -50,7 +51,7 @@ namespace NyaapiDotnet.UnitTests.Pantsu
         public async Task SearchForQuality_ReturnsOnlyQuality()
         {
             var nyaapiService = new NyaapiService();
-            await foreach (Torrent t in nyaapiService.searchTorrents(Feeds.Pantsu, quality: Quality.FHD, limit: 10))
+            await foreach (Torrent t in nyaapiService.SearchTorrents(Feeds.Pantsu, quality: Quality.FHD, limit: 10))
             {
                 Assert.Contains("[1080p]", t.Name);
             }
