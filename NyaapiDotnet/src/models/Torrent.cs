@@ -1,5 +1,6 @@
 using System;
 using NyaapiDotnet.Pantsu.Models;
+using NyaapiDotnet.Si.Models;
 
 namespace NyaapiDotnet.Models
 {
@@ -32,6 +33,22 @@ namespace NyaapiDotnet.Models
             Leechers = pantsuTorrent.Leechers;
             Completed = pantsuTorrent.Completed.Equals(1);
             Status = pantsuTorrent.Status.ToString();
+        }
+
+        public Torrent(SiTorrent siTorrent)
+        {
+            Id = siTorrent.Id;
+            Name = siTorrent.Name;
+            Hash = siTorrent.Hash;
+            Date = siTorrent.Date;
+            Category = siTorrent.Category;
+            SubCategory = siTorrent.SubCategory;
+            Magnet = siTorrent.Magnet;
+            TorrentAddress = siTorrent.Torrent;
+            Seeders = siTorrent.Seeders;
+            Leechers = siTorrent.Leechers;
+            Completed = siTorrent.Completed.Equals(1);
+            Status = siTorrent.Status.ToString();
         }
     };
 }
