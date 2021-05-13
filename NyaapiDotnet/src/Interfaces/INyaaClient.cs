@@ -9,6 +9,6 @@ namespace NyaapiDotnet.Interfaces
 {
     public interface INyaaClient
     {
-        IAsyncEnumerable<Torrent> SearchTorrents(Fansubs fansubs, Quality quality, string search, int limit);
+        IAsyncEnumerable<Torrent> SearchTorrents(Fansubs fansubs, Quality quality, string search, int limit, int page);
     }
 }

@@ -12,7 +12,7 @@ namespace NyaapiDotnet.Pantsu
 {
     public class PantsuClient : INyaaClient
     {
-        public async IAsyncEnumerable<Torrent> SearchTorrents(Fansubs fansubs, Quality quality, string search, int limit)
+        public async IAsyncEnumerable<Torrent> SearchTorrents(Fansubs fansubs, Quality quality, string search, int limit, int page)
         {
             var queryParams = CreateParamsForPantsu(fansubs, quality, search, limit);
             await foreach (Torrent t in SearchTorrents(queryParams))
@@ -40,18 +40,20 @@ namespace NyaapiDotnet.Pantsu
             }
         }
 
-        private SearchRequestParams CreateParamsForPantsu(Fansubs fansubs = Fansubs.None, Quality quality = Quality.None, string search = "", int limit = 0)
+        private SearchRequestParams CreateParamsForPantsu(Fansubs fansubs = Fansubs.None, Quality quality = Quality.None, string search = "", int limit = 0, int page = 1)
         {
-            var queryParams = new SearchRequestParams
-            {
-                Query = CreateSearchQuery(fansubs, quality, search)
-            };
             var categories = new ArrayList
             {
                 "1_0"
             };
-            queryParams.Categories = categories;
-            queryParams.Limit = limit;
+            var queryParams = new SearchRequestParams
+            {
+                Query = CreateSearchQuery(fansubs, quality, search),
+                Categories = categories,
+                Limit = limit,
+                Page = page
+            };
+            
             return queryParams;
         }
 

@@ -14,14 +14,16 @@ namespace NyaapiDotnet.Si
 {
     public class Scraper
     {
-        public async IAsyncEnumerable<Torrent> scrapeTorrent()
+        public async IAsyncEnumerable<Torrent> scrapeTorrent(SiRequestParams queryParams)
         {
+            string queryUrl = queryParams.buildQueryParams();
+
             // Load default configuration
             var config = Configuration.Default.WithDefaultLoader();
             // Create a new browsing context
             var context = BrowsingContext.New(config);
             // This is where the HTTP request happens, returns <IDocument> that we can query later
-            var document = await context.OpenAsync(SiConstants.url);
+            var document = await context.OpenAsync($"{SiConstants.url}?{queryUrl}");
             var torrentRows = document.QuerySelectorAll("tr.default");
             foreach(var row in torrentRows)
             {
