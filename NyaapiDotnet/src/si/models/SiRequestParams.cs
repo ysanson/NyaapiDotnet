@@ -53,12 +53,6 @@ namespace NyaapiDotnet.Si.Models
             {
                 queryParams.Add($"q={Query}");
             }
-            if (Limit != null && Limit != 0) {
-                queryParams.Add($"limit={Limit}");
-            } else 
-            {
-                queryParams.Add("limit=99999");
-            }
             if (!string.IsNullOrEmpty(Sort))
             {
                 queryParams.Add($"s={Sort}");

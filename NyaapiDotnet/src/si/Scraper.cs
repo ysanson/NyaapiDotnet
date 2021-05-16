@@ -17,18 +17,19 @@ namespace NyaapiDotnet.Si
         public async IAsyncEnumerable<Torrent> scrapeTorrent(SiRequestParams queryParams)
         {
             string queryUrl = queryParams.buildQueryParams();
+            string url = $"{SiConstants.url}/?{queryUrl}";
 
             // Load default configuration
             var config = Configuration.Default.WithDefaultLoader();
             // Create a new browsing context
             var context = BrowsingContext.New(config);
             // This is where the HTTP request happens, returns <IDocument> that we can query later
-            var document = await context.OpenAsync($"{SiConstants.url}?{queryUrl}");
+            var document = await context.OpenAsync(url);
             var torrentRows = document.QuerySelectorAll("tr.default");
             foreach(var row in torrentRows)
             {
                 MatchCollection regxMatches = Regex.Matches(GetNthTd(row, 3).QuerySelector("a:nth-child(2)").GetAttribute("href"), @"btih:(\w+)");
-                long.TryParse(GetNthTd(row, 2).QuerySelector("a:not('comments')").GetAttribute("href").Replace("/view/", ""), out long id);
+                long.TryParse(GetNthTd(row, 2).QuerySelector("a").GetAttribute("href").Replace("/view/", ""), out long id);
                 DateTime dt = DateTimeOffset.FromUnixTimeSeconds(long.Parse(GetNthTd(row, 5).GetAttribute("data-timestamp"))).DateTime;
                 int.TryParse(GetNthTd(row, 6).TextContent, out int seeders);
                 int.TryParse(GetNthTd(row, 7).TextContent, out int leechers);
@@ -38,7 +39,7 @@ namespace NyaapiDotnet.Si
                 SiTorrent torrent = new SiTorrent()
                 {
                     Id = id,
-                    Name = GetNthTd(row, 2).QuerySelector("a:not('comments')").TextContent.Trim(),
+                    Name = GetNthTd(row, 2).QuerySelector("a").TextContent.Trim(),
                     Hash = regxMatches.First().Value,
                     Date = dt,
                     Filesize = GetNthTd(row, 4).TextContent,
