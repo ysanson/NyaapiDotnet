@@ -56,5 +56,16 @@ namespace NyaapiDotnet.UnitTests.Pantsu
                 Assert.Contains("[1080p]", t.Name);
             }
         }
+
+        [Fact]
+        public async Task SearchForFanSubAndQuality_ReturnsCorrectInstances()
+        {
+            var nyaapiService = new NyaapiService();
+            await foreach(Torrent t in nyaapiService.SearchTorrents(Feeds.Pantsu, quality: Quality.FHD, fansubs: Fansubs.EraiRaws, limit: 10))
+            {
+                Assert.Contains("[Erai-raws]", t.Name);
+                Assert.Contains("[1080p]", t.Name);
+            }
+        }
     }
 }

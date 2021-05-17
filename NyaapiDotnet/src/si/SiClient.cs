@@ -26,12 +26,11 @@ namespace NyaapiDotnet.Si
             }
         }
 
-
         private SiRequestParams createParams(Fansubs fansubs = Fansubs.None, Quality quality = Quality.None, string search = "", int limit = 0, int page = 1)
         {
             var categories = new ArrayList
             {
-                "1_0"
+                "1_2"
             };
             var queryParams = new SiRequestParams
             {

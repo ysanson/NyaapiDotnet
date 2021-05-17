@@ -20,5 +20,26 @@ namespace NyaapiDotnet.UnitTests.Si
             }
             Assert.NotEmpty(torrents);
         }
+
+        [Fact]
+        public async Task SearchForErai_ReturnEraiSubs()
+        {
+            var nyaapiService = new NyaapiService();
+            await foreach (Torrent t in nyaapiService.SearchTorrents(Feeds.Si, Fansubs.EraiRaws, limit: 10))
+            {
+                Assert.Contains("[Erai-raws]", t.Name);
+            }
+        }
+        
+        [Fact]
+        public async Task SearchForFanSubAndQuality_ReturnsCorrectInstances()
+        {
+            var nyaapiService = new NyaapiService();
+            await foreach(Torrent t in nyaapiService.SearchTorrents(Feeds.Si, quality: Quality.FHD, fansubs: Fansubs.EraiRaws))
+            {
+                Assert.Contains("[Erai-raws]", t.Name);
+                Assert.Contains("[1080p]", t.Name);
+            }
+        }
     }
 }
