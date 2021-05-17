@@ -19,14 +19,14 @@ namespace NyaapiDotnet.Si
 
         public async IAsyncEnumerable<Torrent> SearchTorrents(Fansubs fansubs, Quality quality, string search, int limit, int page)
         {
-            var queryParams = createParams(fansubs, quality, search, limit, page);
-            await foreach (Torrent t in scraper.scrapeTorrent(queryParams))
+            var queryParams = CreateParams(fansubs, quality, search, limit, page);
+            await foreach (Torrent t in scraper.ScrapeTorrent(queryParams))
             {
                 yield return t;
             }
         }
 
-        private SiRequestParams createParams(Fansubs fansubs = Fansubs.None, Quality quality = Quality.None, string search = "", int limit = 0, int page = 1)
+        private SiRequestParams CreateParams(Fansubs fansubs = Fansubs.None, Quality quality = Quality.None, string search = "", int limit = 0, int page = 1)
         {
             var categories = new ArrayList
             {

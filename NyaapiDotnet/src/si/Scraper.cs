@@ -14,7 +14,7 @@ namespace NyaapiDotnet.Si
 {
     public class Scraper
     {
-        public async IAsyncEnumerable<Torrent> scrapeTorrent(SiRequestParams queryParams)
+        public async IAsyncEnumerable<Torrent> ScrapeTorrent(SiRequestParams queryParams)
         {
             string queryUrl = queryParams.buildQueryParams();
             string url = $"{SiConstants.url}/?{queryUrl}";
@@ -29,14 +29,14 @@ namespace NyaapiDotnet.Si
             foreach(var row in torrentRows)
             {
                 MatchCollection regxMatches = Regex.Matches(GetNthTd(row, 3).QuerySelector("a:nth-child(2)").GetAttribute("href"), @"btih:(\w+)");
-                long.TryParse(GetNthTd(row, 2).QuerySelector("a").GetAttribute("href").Replace("/view/", ""), out long id);
+                _ = long.TryParse(GetNthTd(row, 2).QuerySelector("a").GetAttribute("href").Replace("/view/", ""), out long id);
                 DateTime dt = DateTimeOffset.FromUnixTimeSeconds(long.Parse(GetNthTd(row, 5).GetAttribute("data-timestamp"))).DateTime;
-                int.TryParse(GetNthTd(row, 6).TextContent, out int seeders);
-                int.TryParse(GetNthTd(row, 7).TextContent, out int leechers);
-                int.TryParse(GetNthTd(row, 8).TextContent, out int completed);
+                _ = int.TryParse(GetNthTd(row, 6).TextContent, out int seeders);
+                _ = int.TryParse(GetNthTd(row, 7).TextContent, out int leechers);
+                _ = int.TryParse(GetNthTd(row, 8).TextContent, out int completed);
 
 
-                SiTorrent torrent = new SiTorrent()
+                SiTorrent torrent = new()
                 {
                     Id = id,
                     Name = GetNthTd(row, 2).QuerySelector("a").TextContent.Trim(),
@@ -47,7 +47,11 @@ namespace NyaapiDotnet.Si
                     SubCategory = GetNthTd(row, 1).QuerySelector("a").GetAttribute("href").Replace("/?c=", ""),
                     Magnet = GetNthTd(row, 3).QuerySelector("a:nth-child(2)").GetAttribute("href"),
                     Torrent = SiConstants.url + GetNthTd(row, 3).QuerySelector("a:nth-child(1)").GetAttribute("href"),
-                    Status = row.GetAttribute("class")
+                    Status = row.GetAttribute("class"),
+                    Seeders = seeders,
+                    Leechers = leechers,
+                    Completed = completed,
+                    Description = ""
                 };
                 yield return new Torrent(torrent);
             }

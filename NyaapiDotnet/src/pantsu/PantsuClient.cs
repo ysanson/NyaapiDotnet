@@ -25,7 +25,7 @@ namespace NyaapiDotnet.Pantsu
         private async IAsyncEnumerable<Torrent> SearchTorrents(SearchRequestParams queryParams)
         {
             using var client = new HttpClient();
-            string url = queryParams != null ? $"{PantsuConstants.url}/search?{queryParams.buildQueryParams()}" : $"{PantsuConstants.url}/search";
+            string url = queryParams != null ? $"{PantsuConstants.url}/search?{queryParams.BuildQueryParams()}" : $"{PantsuConstants.url}/search";
 
             HttpResponseMessage response = await client.GetAsync(url);
             response.EnsureSuccessStatusCode();

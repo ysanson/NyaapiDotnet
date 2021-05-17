@@ -35,7 +35,7 @@ namespace NyaapiDotnet.Pantsu.Models
         public string Order { get; set; }
         public string[] Languages { get; set; }
 
-        public string buildQueryParams()
+        public string BuildQueryParams()
         {
             ArrayList queryParams = new ArrayList();
             if (Categories != null && Categories.Count != 0)
