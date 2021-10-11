@@ -61,10 +61,11 @@ namespace NyaapiDotnet.Pantsu
         {
             string fansub = fansubs switch
             {
-                Fansubs.EraiRaws => "[Erai-raws] - ",
-                Fansubs.Puya => "[PuyaSubs!] - ",
-                Fansubs.Fuyu => "[Fuyu] - ",
-                Fansubs.Durandal => "[DurandalSubs] - ",
+                Fansubs.EraiRaws => "[Erai-raws] ",
+                Fansubs.Puya => "[PuyaSubs!] ",
+                Fansubs.Fuyu => "[Fuyu] ",
+                Fansubs.SSA => "[SSA] ",
+                Fansubs.Durandal => "[DurandalSubs] ",
                 _ => ""
             };
             string qual = quality switch

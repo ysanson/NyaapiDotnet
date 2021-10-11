@@ -6,6 +6,7 @@ namespace NyaapiDotnet.Models
         Puya,
         Fuyu,
         Durandal,
+        SSA,
         None
     }
 }
