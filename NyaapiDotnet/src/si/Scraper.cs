@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AngleSharp;
 using AngleSharp.Dom;
-using AngleSharp.Html.Parser;
 using NyaapiDotnet.Models;
 using NyaapiDotnet.Si.Models;
 using System.Text.RegularExpressions;
